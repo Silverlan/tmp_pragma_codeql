@@ -52,7 +52,7 @@ jobs:
       uses: Silverlan/pragma/github_actions/build@master
       id: build-pragma
       with:
-        build-args: "--with-common-modules=0"
+        build-args: "--with-common-modules=1"
 
     - name: Clear Space
       shell: bash
