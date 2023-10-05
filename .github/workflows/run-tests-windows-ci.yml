@@ -2,10 +2,7 @@ name: Run Tests (Windows)
 
 # Only trigger, when the build workflow succeeded
 on:
-  workflow_run:
-    workflows: ["Build Windows"]
-    types:
-      - completed
+  workflow_call:
 
 jobs:
   build:
