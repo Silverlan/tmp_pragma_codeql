@@ -1,0 +1,51 @@
+name: Run Tests (Windows)
+
+# Only trigger, when the build workflow succeeded
+on:
+  workflow_run:
+    workflows: ["Build Windows"]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Download Pragma
+      run: |
+        curl -LO https://github.com/Silverlan/tmp_pragma_codeql/releases/download/nightly/pragma.zip
+        unzip pragma.zip
+        rm pragma.zip
+      shell: bash
+
+    - name: Run Test Scripts
+      shell: bash
+      run: |
+        chmod +x pragma_server.exe
+        ./pragma_server.exe -log 2 2 +map "test_physics" +"lua_exec tests/ci_runner_tests.lua"
+        EXIT_CODE=$?
+        # Check the exit code
+        if [ $EXIT_CODE -eq 0 ]; then
+          echo "Pragma Server executed successfully."
+        else
+          echo "Pragma Server execution failed with exit code $EXIT_CODE."
+          exit 1  # Exit the step with an error status
+        fi
+
+    - name: Check Result
+      run: |
+        CI_CONTENTS=$(cat ci.txt)
+        if [ "$CI_CONTENTS" == "0" ]; then
+          echo "ci.txt contains '0'. Step failed."
+          exit 1  # Exit the step with an error status
+        fi
+
+    - name: Upload Log
+      uses: actions/upload-artifact@v2
+      with:
+        name: log_server
+        path: log_server.txt
