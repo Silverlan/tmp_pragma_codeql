@@ -141,5 +141,4 @@ jobs:
 
       - name: Run Tests
         uses: ./.github/workflows/run-tests-windows-ci.yml
-        secrets: inherit
         continue-on-error: true
