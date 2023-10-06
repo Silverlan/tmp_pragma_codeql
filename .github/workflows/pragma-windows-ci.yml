@@ -36,6 +36,7 @@ jobs:
         uses: Silverlan/pragma/github_actions/setup@master
 
       - name: Run Tests
+        uses: actions/checkout@v3
         script: |
           github.rest.actions.createWorkflowDispatch({
             owner: context.repo.owner,
