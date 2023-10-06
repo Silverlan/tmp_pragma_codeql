@@ -1,8 +1,6 @@
 name: Run Tests (Windows)
 
-# Only trigger, when the build workflow succeeded
-on:
-  workflow_call:
+on: [repository_dispatch]
 
 jobs:
   build:

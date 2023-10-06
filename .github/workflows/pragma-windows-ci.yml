@@ -35,6 +35,15 @@ jobs:
       - name: Setup Pragma
         uses: Silverlan/pragma/github_actions/setup@master
 
+      - name: Run Tests
+        script: |
+          github.rest.actions.createWorkflowDispatch({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            workflow_id: 'run-tests-windows-ci.yml',
+            ref: 'master',
+          })
+
       # We need the latest Windows SDK
       - uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.11
         with:
@@ -138,7 +147,3 @@ jobs:
       - name: Handle Error
         uses: Silverlan/common_actions/action_handle_error@main
         if: failure()
-
-      - name: Run Tests
-        uses: ./.github/workflows/run-tests-windows-ci.yml
-        continue-on-error: true
