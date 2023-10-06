@@ -23,6 +23,7 @@ jobs:
 
     - name: Run Test Scripts
       shell: bash
+      timeout-minutes: 5
       run: |
         chmod +x pragma_server.exe
         ./pragma_server.exe -log 2 2 +map "test_physics" +"lua_exec tests/ci_runner_tests.lua"
@@ -45,6 +46,7 @@ jobs:
 
     - name: Upload Log
       uses: actions/upload-artifact@v2
+      if: always()
       with:
         name: log_server
         path: log_server.txt
