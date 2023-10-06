@@ -149,6 +149,7 @@ jobs:
 
       - name: Run tests
         uses: Silverlan/tmp_pragma_codeql/github_actions/run_tests@master
+        timeout-minutes: 5
         with:
           install-dir: "${{ steps.build-pragma.outputs.install-dir }}"
 

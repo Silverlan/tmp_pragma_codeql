@@ -12,7 +12,6 @@ runs:
         name: "pragma > install_requirements"
 
     - name: Run Test Scripts
-      timeout-minutes: 5
       shell: bash
       run: |
         chmod +x pragma_server.exe
@@ -28,6 +27,7 @@ runs:
         fi
 
     - name: Check Result
+      shell: bash
       run: |
         CI_CONTENTS=$(cat "${{inputs.install-dir}}/ci.txt")
         if [ "$CI_CONTENTS" == "0" ]; then
