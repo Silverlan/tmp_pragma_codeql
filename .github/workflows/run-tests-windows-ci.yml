@@ -1,6 +1,6 @@
 name: Run Tests (Windows)
 
-on: [repository_dispatch]
+on: workflow_dispatch
 permissions:
   contents: 'read'
   id-token: 'write'
