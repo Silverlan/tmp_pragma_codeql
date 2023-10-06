@@ -37,13 +37,14 @@ jobs:
 
       - name: Run Tests
         uses: actions/github-script@v6
-        script: |
-          github.rest.actions.createWorkflowDispatch({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            workflow_id: 'run-tests-windows-ci.yml',
-            ref: 'master',
-          })
+        with:
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'run-tests-windows-ci.yml',
+              ref: 'master',
+            })
 
       # We need the latest Windows SDK
       - uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.11
