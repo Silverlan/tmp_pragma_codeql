@@ -25,6 +25,9 @@ jobs:
       shell: bash
       timeout-minutes: 5
       run: |
+        sed -i 's/engine\.shutdown\(\)/console\.run("exit")/' lua/tests/ci_runner_tests.lua
+        cat lua/tests/ci_runner_tests.lua
+
         chmod +x pragma_server.exe
         ./pragma_server.exe -log 2 2 +map "test_physics" +"lua_exec tests/ci_runner_tests.lua"
         EXIT_CODE=$?
