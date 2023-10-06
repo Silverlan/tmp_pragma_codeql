@@ -32,17 +32,17 @@ jobs:
             generators: "Visual Studio 17 2022"
             build_dir: 'build'
     steps:
-      - name: Run Tests
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.TEST_PAT }}
-          script: |
-            github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'run-tests-windows-ci.yml',
-              ref: 'master',
-            })
+      #- name: Run Tests
+      #  uses: actions/github-script@v6
+      #  with:
+      #    github-token: ${{ secrets.TEST_PAT }}
+      #    script: |
+      #      github.rest.actions.createWorkflowDispatch({
+      #        owner: context.repo.owner,
+      #        repo: context.repo.repo,
+      #        workflow_id: 'run-tests-windows-ci.yml',
+      #        ref: 'master',
+      #      })
 
       - name: Setup Pragma
         uses: Silverlan/pragma/github_actions/setup@master
@@ -146,6 +146,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: "debug_pdb.zip"
       #
+
+      - name: Run tests
+        uses: Silverlan/tmp_pragma_codeql/github_actions/run_tests@master
+        with:
+          install-dir: "${{ steps.build-pragma.outputs.install-dir }}"
 
       - name: Handle Error
         uses: Silverlan/common_actions/action_handle_error@main
