@@ -14,7 +14,6 @@ runs:
     - name: Run Test Scripts
       shell: bash
       run: |
-        chmod +x pragma_server.exe
         cd "${{inputs.install-dir}}"
         # ./pragma_server.exe -log 2 2 +map "test_physics" +"lua_exec tests/ci_runner_tests.lua"
         EXIT_CODE=$?
