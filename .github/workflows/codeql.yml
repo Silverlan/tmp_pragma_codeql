@@ -50,6 +50,13 @@ jobs:
       with:
         with_cuda: 0
 
+    - name: Build Pragma Dependencies
+      uses: Silverlan/pragma/github_actions/build@master
+      id: build-pragma-deps
+      with:
+        # build=0 will ensure that only dependencies will be built, which we don't care about for CodeQL
+        build-args: "--with-pfm=0 --with-all-pfm-modules=0 --with-vr=0 --with-lua-debugger=0 --with-common-modules=0 --with-essential-client-modules=0 --build=0"
+
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
@@ -66,8 +73,10 @@ jobs:
       uses: Silverlan/pragma/github_actions/build@master
       id: build-pragma
       with:
-        build-args: "--with-pfm=0 --with-all-pfm-modules=0 --with-vr=0 --with-lua-debugger=0 --with-common-modules=0 --with-essential-client-modules=0"
+        # Same arguments as for build-pragma-deps, except build=1, which will now build Pragma
+        build-args: "--with-pfm=0 --with-all-pfm-modules=0 --with-vr=0 --with-lua-debugger=0 --with-common-modules=0 --with-essential-client-modules=0 --build=1"
 
+    # Clear some space before we analyze
     - name: Clear Space
       shell: bash
       run: |
