@@ -47,6 +47,8 @@ jobs:
     steps:
     - name: Setup Pragma
       uses: Silverlan/pragma/github_actions/setup@master
+      with:
+        with_cuda: 0
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
